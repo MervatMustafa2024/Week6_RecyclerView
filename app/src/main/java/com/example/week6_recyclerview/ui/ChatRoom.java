@@ -55,7 +55,8 @@ public class ChatRoom extends AppCompatActivity {
             @Override
             public MyRowHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
                 if (viewType==0)
-                {SentMessageBinding binding= SentMessageBinding.inflate(getLayoutInflater());
+                {
+                    SentMessageBinding binding= SentMessageBinding.inflate(getLayoutInflater());
                 return new MyRowHolder(binding.getRoot());}
                 else {
                     ReceivedMessageBinding binding= ReceivedMessageBinding.inflate(getLayoutInflater());
@@ -78,17 +79,18 @@ public class ChatRoom extends AppCompatActivity {
             @Override
             public  int getItemViewType(int position){
                 ChatMessage obj = messages.get(position);
-                if (obj.isSentButton())
+                if (obj.isSentButton()==true)
 
-                return 0;
+                return 0; // sender message
                 else
-                    return 1;
+                    return 1;// receiver message
             }
 
 
 
     });
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         binding.sendButton.setOnClickListener(click->{
             SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a");
             String currentDateandTime = sdf.format(new Date());
