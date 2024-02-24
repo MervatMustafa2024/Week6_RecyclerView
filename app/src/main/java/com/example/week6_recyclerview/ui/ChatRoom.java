@@ -39,7 +39,6 @@ public class ChatRoom extends AppCompatActivity {
 
         chatModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
 
-
         messages = chatModel.messages.getValue();
         if(messages == null)
         {
