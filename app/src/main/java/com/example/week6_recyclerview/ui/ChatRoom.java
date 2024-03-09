@@ -17,12 +17,19 @@ import com.example.week6_recyclerview.databinding.ReceivedMessageBinding;
 import com.example.week6_recyclerview.databinding.RoomChatBinding;
 import com.example.week6_recyclerview.databinding.SentMessageBinding;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,7 +49,14 @@ public class ChatRoom extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.room_chat);
 
+       // setSupportActionBar(binding.toolbar);
+
+
+
         binding= RoomChatBinding.inflate(getLayoutInflater());
+
+        setSupportActionBar(binding.toolbar);
+
         setContentView(binding.getRoot());
 
         chatModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
@@ -173,5 +187,27 @@ public class ChatRoom extends AppCompatActivity {
             timeText=itemView.findViewById(R.id.time);
 
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+          if( item.getItemId()==R.id.item1 ){
+
+              CharSequence text = "Hello toast!";
+              int duration = Toast.LENGTH_SHORT;
+
+              Toast toast = Toast.makeText(this /* MyActivity */, text, duration);
+              toast.show();
+
+          }
+
+        return true;
     }
 }
