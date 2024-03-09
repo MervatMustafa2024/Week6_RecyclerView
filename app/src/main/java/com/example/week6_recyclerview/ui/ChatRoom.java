@@ -3,6 +3,7 @@ package com.example.week6_recyclerview.ui;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,7 @@ import com.example.week6_recyclerview.data.MessageDatabase;
 import com.example.week6_recyclerview.databinding.ReceivedMessageBinding;
 import com.example.week6_recyclerview.databinding.RoomChatBinding;
 import com.example.week6_recyclerview.databinding.SentMessageBinding;
+import com.google.android.material.snackbar.Snackbar;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -49,6 +51,7 @@ public class ChatRoom extends AppCompatActivity {
 
         MessageDatabase db = Room.databaseBuilder(getApplicationContext(), MessageDatabase.class,
                 "Messages").build();
+
          mDAO = db.cmDAO();
 
 
@@ -123,6 +126,8 @@ public class ChatRoom extends AppCompatActivity {
             myAdpter.notifyItemInserted(messages.size()-1);
             binding.inputText.setText("");
 
+
+
         });
         binding.receiveButton.setOnClickListener(click->{
             SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a");
@@ -165,10 +170,20 @@ public class ChatRoom extends AppCompatActivity {
 
                     messages. remove(position);
                     myAdpter.notifyItemRemoved(position);
+                    Snackbar.make(e,"You deleted message #" , Snackbar.LENGTH_LONG)
+                            .setAction (  "Undo", clk -> {
+
+                        messages.add (position, m); myAdpter.notifyItemInserted(position);})
+                            .show();
                 });
                 builder.create().show();
 
+
+
+
+
             });
+
             messageText=itemView.findViewById(R.id.message);
             timeText=itemView.findViewById(R.id.time);
 
