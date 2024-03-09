@@ -5,10 +5,8 @@
     <item
         android:id="@+id/item1"
 
-        android:icon="@android:drawable/btn_dialog"
-
-        android:title="Delete this item"
-        app:showAsAction="always" />
+        android:title="Undo"
+        app:showAsAction="never" />
     <item
         android:id="@+id/item2"
 

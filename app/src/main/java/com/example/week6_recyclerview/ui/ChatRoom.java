@@ -16,6 +16,7 @@ import com.example.week6_recyclerview.data.MessageDatabase;
 import com.example.week6_recyclerview.databinding.ReceivedMessageBinding;
 import com.example.week6_recyclerview.databinding.RoomChatBinding;
 import com.example.week6_recyclerview.databinding.SentMessageBinding;
+import com.google.android.material.snackbar.Snackbar;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -44,6 +45,9 @@ public class ChatRoom extends AppCompatActivity {
 
     RecyclerView.Adapter<MyRowHolder> myAdpter;
     ChatMessageDAO mDAO;
+    private int opID; // 1 for insert and 2 for delete
+    private  ChatMessage deletedMessage;
+    private int deletPostion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +140,7 @@ public class ChatRoom extends AppCompatActivity {
             mDAO.insertMessage(obj);});
             myAdpter.notifyItemInserted(messages.size()-1);
             binding.inputText.setText("");
+            opID=1;
 
         });
         binding.receiveButton.setOnClickListener(click->{
@@ -150,6 +155,7 @@ public class ChatRoom extends AppCompatActivity {
             myAdpter.notifyItemInserted(messages.size()-1);
 
             binding.inputText.setText("");
+            opID=1;
 
         });
 
@@ -179,6 +185,16 @@ public class ChatRoom extends AppCompatActivity {
 
                     messages. remove(position);
                     myAdpter.notifyItemRemoved(position);
+                    Snackbar.make(e,"You deleted message #" , Snackbar.LENGTH_LONG)
+                            .setAction (  "Undo", clk -> {
+
+                                messages.add (position, m); myAdpter.notifyItemInserted(position);})
+                            .show();
+
+                  deletedMessage = m;
+                  deletPostion=position;
+                    opID=2;
+
                 });
                 builder.create().show();
 
@@ -198,16 +214,48 @@ public class ChatRoom extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-          if( item.getItemId()==R.id.item1 ){
+        AlertDialog.Builder builder = new AlertDialog.Builder(ChatRoom.this);
 
-              CharSequence text = "Hello toast!";
-              int duration = Toast.LENGTH_SHORT;
+        if(item.getItemId() == R.id.item1){
+            if(opID==1)
+            {
+                int position=messages.size()-1;
+                ChatMessage m=messages.get(position);
 
-              Toast toast = Toast.makeText(this /* MyActivity */, text, duration);
-              toast.show();
+                builder.setMessage("Do you want to delete the message:" +m.getMessage());
+                builder.setTitle("Question:");
+                builder.setNegativeButton("NO", (dialog, cl)->{});
+                builder.setPositiveButton( "Yes", (dialog, cl)->{
+                    Executor thread = Executors.newSingleThreadExecutor();
+                    thread.execute(() ->
+                    {
+                        mDAO.deleteMessage(m);});
+                    messages. remove(position);
+                    myAdpter.notifyItemRemoved(position);
 
-          }
+                });
+                builder.create().show();
+
+            }else if(opID==2){
+
+                messages.add (deletPostion, deletedMessage); myAdpter.notifyItemInserted(deletPostion);
+            }
+
+        }  else if (item.getItemId() == R.id.item2) {
+
+            Log.w("mervat", "Tost");
+
+            builder.setMessage("This is the chat application : Version 1.0");
+            builder.setTitle("Information");
+
+            builder.setPositiveButton("OK", (dialog, cl) -> {
+            });
+            builder.create().show();
+
+        }
+
+
 
         return true;
     }
-}
+    }
