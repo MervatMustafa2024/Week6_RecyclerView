@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -68,6 +70,16 @@ public class ChatRoom extends AppCompatActivity {
                 runOnUiThread( () -> binding.recyclerView.setAdapter( myAdpter )); //You can then load the RecyclerView
             });
         }
+
+
+
+           chatModel.selectedMessage.observe(this, (newMessageValue) -> {
+               MessageDetailsFragment chatFragment = new MessageDetailsFragment( newMessageValue ); //newValue is the newly set ChatMessage
+               FragmentManager fMgr = getSupportFragmentManager();
+               FragmentTransaction tx = fMgr.beginTransaction();
+               tx.add(R.id.fragmentLocation, chatFragment);
+               tx.commit();
+        });
 
 
 
@@ -154,9 +166,10 @@ public class ChatRoom extends AppCompatActivity {
 
         public MyRowHolder(@NonNull View itemView) {
             super(itemView);
+
             AlertDialog.Builder builder = new AlertDialog.Builder( ChatRoom.this );
             itemView.setOnClickListener(e->{
-                int position=getAbsoluteAdapterPosition();
+             /*   int position=getAbsoluteAdapterPosition();
                 ChatMessage m=messages.get(position);
 
                 builder.setMessage("Do you want to delete the message:" +messageText.getText());
@@ -176,10 +189,12 @@ public class ChatRoom extends AppCompatActivity {
                         messages.add (position, m); myAdpter.notifyItemInserted(position);})
                             .show();
                 });
-                builder.create().show();
+                builder.create().show();*/
 
 
-
+                int position = getAbsoluteAdapterPosition();
+                ChatMessage selected = messages.get(position);
+                chatModel.selectedMessage.postValue(selected);
 
 
             });

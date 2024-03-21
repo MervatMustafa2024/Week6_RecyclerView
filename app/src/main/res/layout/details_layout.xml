@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/messageText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="36dp"
+        android:text="Message goes here"
+        android:textColor="#F44336"
+        android:textSize="34sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/timeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:text="Time goes here"
+        android:textColor="#673AB7"
+        android:textSize="34sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/messageText" />
+
+    <TextView
+        android:id="@+id/sendReceiveText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:text="send receive goes here"
+        android:textColor="#2196F3"
+        android:textSize="34sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeText" />
+
+    <TextView
+        android:id="@+id/databaseText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Database id goes here"
+        android:textColor="#FF9800"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="@+id/sendReceiveText"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/sendReceiveText"
+        app:layout_constraintTop_toBottomOf="@+id/sendReceiveText" />
+
+    <Button
+        android:id="@+id/closeButton"
+        android:layout_width="116dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="56dp"
+        android:text="close"
+        app:layout_constraintStart_toStartOf="@+id/databaseText"
+        app:layout_constraintTop_toBottomOf="@+id/databaseText" />
+</androidx.constraintlayout.widget.ConstraintLayout>
