@@ -23,6 +23,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -49,6 +50,7 @@ public class ChatRoom extends AppCompatActivity {
         binding= RoomChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+       setSupportActionBar(binding.toolbar);
         chatModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
 
         MessageDatabase db = Room.databaseBuilder(getApplicationContext(), MessageDatabase.class,
@@ -203,5 +205,12 @@ public class ChatRoom extends AppCompatActivity {
             timeText=itemView.findViewById(R.id.time);
 
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.my_menu, menu);
+
+        return true;
     }
 }

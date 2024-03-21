@@ -16,14 +16,30 @@
             android:layout_height="match_parent"
             tools:context=".ui.ChatRoom">
 
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="413dp"
+                android:layout_height="75dp"
+                android:background="?attr/colorPrimary"
+                android:backgroundTint="@color/design_default_color_secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:subtitleTextColor="@color/white"
+                app:title="Chat App"
+                app:titleTextColor="@color/white"
+                tools:ignore="MissingConstraints" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="402dp"
+                android:layout_height="575dp"
                 app:layout_constraintBottom_toTopOf="@+id/sendButton"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintHorizontal_bias="0.448"
+                app:layout_constraintStart_toStartOf="@+id/toolbar"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
             <Button
                 android:id="@+id/sendButton"
