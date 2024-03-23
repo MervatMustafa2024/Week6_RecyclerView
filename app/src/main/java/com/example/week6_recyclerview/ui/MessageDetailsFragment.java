@@ -23,12 +23,14 @@ public class MessageDetailsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+
         DetailsLayoutBinding binding=DetailsLayoutBinding.inflate(inflater);
 
        binding.messageText.setText(selected.getMessage());
         binding.timeText.setText(selected.getTimeSent());
         binding.sendReceiveText.setText(selected.isSentButton()?"Send":"Receive");
        binding.databaseText.setText( "id=" + selected.id);
+
 binding.closeButton.setOnClickListener(e->{
 
     getActivity().getSupportFragmentManager().beginTransaction().remove(MessageDetailsFragment.this).commit();
